@@ -77,15 +77,14 @@ namespace WSHospital.View
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-
             string barcode = BarCodeGenerate();
 
             StackPanel stackPanel = new StackPanel();
             stackPanel.Orientation = Orientation.Horizontal;
             stackPanel.VerticalAlignment = VerticalAlignment.Bottom;
+            stackPanel.HorizontalAlignment = HorizontalAlignment.Center;
             stackPanel.Width = 520;
-            stackPanel.Height = 140;
-            canv.Children.Add(stackPanel);
+            stackPanel.Height = 140;     
             
 
             for (int i = 0; i < barcode.Length; i++)
@@ -94,16 +93,24 @@ namespace WSHospital.View
                 Label label = new Label();
                 label.VerticalAlignment = VerticalAlignment.Bottom;
 
+                StackPanel stackPanel1 = new StackPanel();
+                stackPanel1.Orientation = Orientation.Horizontal;
+                stackPanel1.VerticalAlignment = VerticalAlignment.Bottom;
+
                 rectangle.Fill = Brushes.Black;
-                rectangle.Width = 2;
-                rectangle.Height = 280;
+                rectangle.Width = int.Parse(barcode[i].ToString());
+                rectangle.Height = 100;
 
-                
-                stackPanel.Children.Add(rectangle);
                 label.Content = barcode[i];
-                stackPanel.Children.Add(label);
+                label.Margin = new Thickness(0, 20, 0, 0);
 
+                stackPanel1.Children.Add(label);
+                stackPanel1.Children.Add(rectangle);         
+
+                stackPanel.Children.Add(stackPanel1);
             }
+
+            canv.Children.Add(stackPanel);
 
         }
 
@@ -161,6 +168,11 @@ namespace WSHospital.View
         {
             AddPatient addPatient = new AddPatient(Shtr.Text);
             addPatient.Show();
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
