@@ -1,0 +1,91 @@
+﻿<Window x:Class="WSHospital.View.ReceptionBioMaterialWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WSHospital.View"
+        mc:Ignorable="d"
+        Title="ReceptionBioMaterialWindow" Height="720" Width="1100" 
+        MaxHeight="1080" MaxWidth="1920" MinHeight="720" MinWidth="1100">
+    <Window.Resources>
+        <Style x:Key="BordStyle">
+            <Setter Property="ItemsControl.BorderThickness" Value="2"></Setter>
+            <Setter Property="ItemsControl.BorderBrush" Value="#FF77AFD6"></Setter>
+            <Setter Property="ItemsControl.Width" Value="275"></Setter>
+            <Setter Property="ItemsControl.Margin" Value="5"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="695*"></ColumnDefinition>
+            <ColumnDefinition Width="677*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="280*"></RowDefinition>
+            <RowDefinition Height="180*"></RowDefinition>
+            <RowDefinition Height="229*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Border BorderBrush="#FF8C9AA6" BorderThickness="5" CornerRadius="15" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="3" HorizontalAlignment="Center">
+
+            <StackPanel Orientation="Horizontal">
+
+                <StackPanel HorizontalAlignment="Center" Width="600" Margin="10 0 0 0">
+
+                    <Label FontSize="20">Введите штрих код</Label>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Width="400" Height="35" Name="Shtr"></TextBox>
+                        <Button Width="150" Margin="10 0 0 0" FontSize="16" Click="Button_Click_2">Сгенерировать</Button>
+                    </StackPanel>
+
+                    <StackPanel Width="560" Height="580"  HorizontalAlignment="Left" Margin="0 10 0 0">
+                        <Border BorderBrush="LightGray" BorderThickness="3">
+                            <Canvas Background="#FFF3F3F3" Height="180" Name="canv"></Canvas>
+                        </Border>
+                        <Button Width="250" Height="35" FontSize="16" HorizontalAlignment="Left" Margin="0 10 0 0">Печать</Button>
+
+                        <Button Width="250" Height="35" HorizontalAlignment="Left" Margin="0 310 0 0" FontSize="18" Click="Button_Click_3">Сформировать заказ</Button>
+                    </StackPanel>
+
+
+                </StackPanel>
+
+                <StackPanel Width="450" Margin="15 0 0 0">
+
+                    <Label FontSize="22" HorizontalAlignment="Center" FontWeight="DemiBold">Пациент</Label>
+
+                    <Label FontSize="20" HorizontalAlignment="Center">FIO</Label>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Width="270" Height="35" Background="#FFE4E4E4" Name="FIO"></TextBlock>
+                        <Button Height="30" Width="90" FontSize="15" Margin="5 0 0 0" Click="Button_Click">Изменить</Button>
+                    </StackPanel>
+
+                    <Label FontSize="20" HorizontalAlignment="Center">Date of Birth</Label>
+                    <TextBlock Width="365" Height="30" Background="#FFE4E4E4" Name="DateBirth"></TextBlock>
+
+                    <Label FontSize="20" HorizontalAlignment="Center">Email</Label>
+                    <TextBlock Width="365" Height="30" Background="#FFE4E4E4" Name="EmailP"></TextBlock>
+
+                    <Label FontSize="20" HorizontalAlignment="Center">Passport Data</Label>
+                    <TextBlock Width="365" Height="30" Background="#FFE4E4E4" Name="PassDat"></TextBlock>
+
+                    <Label FontSize="20" HorizontalAlignment="Center">Phone</Label>
+                    <TextBlock Width="365" Height="30" Background="#FFE4E4E4" Name="PhoneP"></TextBlock>
+
+                    <Label FontSize="20" HorizontalAlignment="Center">Insurance Policy</Label>
+                    <TextBlock Width="365" Height="30" Background="#FFE4E4E4" Name="InsPol"></TextBlock>
+
+                    <Label FontSize="20" HorizontalAlignment="Center">Type of Policy</Label>
+                    <TextBlock Width="365" Height="30" Background="#FFE4E4E4" Name="TypePol"></TextBlock>
+
+                    <Label FontSize="20" HorizontalAlignment="Center">Услуги</Label>
+                    <ComboBox Width="365" Height="30" Name="comb"></ComboBox>
+
+                </StackPanel>
+
+            </StackPanel>
+
+        </Border>
+
+    </Grid>
+</Window>
