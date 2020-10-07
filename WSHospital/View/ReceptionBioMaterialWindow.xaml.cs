@@ -44,48 +44,67 @@ namespace WSHospital.View
 
         public ReceptionBioMaterialWindow() {}
 
-        public ReceptionBioMaterialWindow(Patients pat)
-        {
-            FIO.Text = pat.FIO;
-            PassDat.Text = pat.PassportData;
-            PhoneP.Text = pat.Phone.ToString();
-            InsPol.Text = pat.InsurancePolicy.ToString();
-            DateBirth.Text = pat.DateOfBirth.ToString();
-            EmailP.Text = pat.Email;
-            TypePol.Text = pat.TypeOfPolicy;
-        }
-
         public LabServices Serv; 
         public NumberAnalyze numAn;
+        public Random rnd;
+
+        public string GetControlEan(string str)
+        {
+            int ch = 0;
+            int nch = 0;
+            for(int i = 1; i<6; i++)
+            {
+                ch += int.Parse(str.Substring(2 * i, 1));
+                nch += int.Parse(str.Substring(2 * i - 1, 1));
+            }
+            ch += 3;
+            int cntr = 10 * (ch + nch) % 10;
+
+            return cntr == 10 ? "0" : cntr.ToString();
+        }
+
+        public string BarCodeGenerate()
+        {
+            rnd = new Random();
+            long CodeZakaza = rnd.Next();
+            long day = DateTime.Now.Millisecond;
+            string prefix = CodeZakaza.ToString().Substring(0, 2);
+            string ShCode = prefix.Length == 0 ? "40":prefix + ("0000000000" + CodeZakaza).Substring(("0000000000" + CodeZakaza).Length - 11);
+            string StrShk = ShCode + GetControlEan(ShCode);
+
+            return StrShk;
+        }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            Random rnd = new Random();
 
-            for (int i = 0; i <= 6; i++)
-            {
-                
-            }
+            string barcode = BarCodeGenerate();
+
+            StackPanel stackPanel = new StackPanel();
+            stackPanel.Orientation = Orientation.Horizontal;
+            stackPanel.VerticalAlignment = VerticalAlignment.Bottom;
+            stackPanel.Width = 520;
+            stackPanel.Height = 140;
+            canv.Children.Add(stackPanel);
             
 
-            using(ModelDB md = new ModelDB())
+            for (int i = 0; i < barcode.Length; i++)
             {
-                int shtrih;
+                Rectangle rectangle = new Rectangle();
+                Label label = new Label();
+                label.VerticalAlignment = VerticalAlignment.Bottom;
+
+                rectangle.Fill = Brushes.Black;
+                rectangle.Width = 2;
+                rectangle.Height = 280;
+
+                
+                stackPanel.Children.Add(rectangle);
+                label.Content = barcode[i];
+                stackPanel.Children.Add(label);
+
             }
-           
 
-            for(int i = 0; i < 15; i++){
-
-
-
-                //Rectangle rectangle = new Rectangle();
-                //rectangle.Width = 5;
-                //rectangle.Height = 120;
-                //canv.Children.Add(rectangle);
-            }
-
-            AddPatient addPatient = new AddPatient(Shtr.Text);
-            addPatient.Show();
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
@@ -118,14 +137,30 @@ namespace WSHospital.View
                     MessageBox.Show("Что-то пошло не так!");
                 }
 
-
-
             }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Shtr_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            if (Shtr.Text.Length != 0)
+            {
+                gen.IsEnabled = false;
+            }
+            else if (Shtr.Text.Length == 0)
+            {
+                gen.IsEnabled = true;
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            AddPatient addPatient = new AddPatient(Shtr.Text);
+            addPatient.Show();
         }
     }
 }

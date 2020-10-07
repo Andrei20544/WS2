@@ -29,6 +29,9 @@
                     <GradientStop Color="#FFFBFBFB" Offset="1"/>
                 </LinearGradientBrush>
             </StackPanel.Background>
+
+            <Label Background="#FF95979E" Margin="0 0 0 20" FontSize="25">Вход</Label>
+            
             <Label>Login</Label>
             <Border BorderBrush="#FF97A7B6" BorderThickness="5" CornerRadius="20">
                 <TextBox Background="Transparent" Name="LOG" >a.black@milkwoodproductions.com</TextBox>

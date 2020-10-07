@@ -5,7 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WSHospital.View"
         mc:Ignorable="d"
-        Title="AddPatient" Height="450" Width="500">
+        Title="AddPatient" Height="490" Width="500"
+        MinHeight="490" MinWidth="500" MaxHeight="560" MaxWidth="600">
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="15"></Setter>
+        </Style>
+    </Window.Resources>
     <Grid Background="#FFE0E0E0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -51,7 +57,7 @@
 
             <StackPanel Orientation="Horizontal" Margin="5">
                 <Label Width="120">TypePolicy</Label>
-                <TextBox Width="250" Name="pTypePolicy"></TextBox>
+                <ComboBox Name="PolName" Width="250"></ComboBox>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5">

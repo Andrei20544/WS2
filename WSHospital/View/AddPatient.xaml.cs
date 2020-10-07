@@ -38,6 +38,15 @@ namespace WSHospital.View
                 {
                     CompName.Items.Add(item.IdComp + ". "+ item.NameComp);
                 }
+
+
+                var pol = (from p in md.Patients select p.TypeOfPolicy).Distinct();
+
+                foreach(var item in pol)
+                {
+                    PolName.Items.Add(item.ToString());
+                }
+
             }
 
         }
@@ -58,21 +67,22 @@ namespace WSHospital.View
                         PassportData = pPassportData.Text,
                         Phone = int.Parse(pPhone.Text),
                         InsurancePolicy = int.Parse(pInsPolicy.Text),
-                        TypeOfPolicy = pTypePolicy.Text,
+                        TypeOfPolicy = PolName.SelectedItem.ToString(),
                         IDCompany = int.Parse(CompName.SelectedItem.ToString().Split('.')[0])
                     };
 
                     md.Patients.Add(pat);
                     md.SaveChanges();
 
-                    ReceptionBioMaterialWindow rbmw = new ReceptionBioMaterialWindow(pat);
+                    ReceptionBioMaterialWindow rbmw = new ReceptionBioMaterialWindow();
+                    rbmw.FIO.Text = pat.FIO;
+                    rbmw.PassDat.Text = pat.PassportData;
+                    rbmw.PhoneP.Text = pat.Phone.ToString();
+                    rbmw.InsPol.Text = pat.InsurancePolicy.ToString();
+                    rbmw.TypePol.Text = pat.TypeOfPolicy;
+
 
                     MessageBox.Show("Данные успешно созранены в БД");
-
-
-
-                    //ReceptionBioMaterialWindow RBMW = new ReceptionBioMaterialWindow();
-                    //RBMW.SetComboFio();
                 }
                 catch(Exception ex)
                 {

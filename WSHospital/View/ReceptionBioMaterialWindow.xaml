@@ -5,15 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WSHospital.View"
         mc:Ignorable="d"
-        Title="ReceptionBioMaterialWindow" Height="720" Width="1100" 
-        MaxHeight="1080" MaxWidth="1920" MinHeight="720" MinWidth="1100">
+        Title="ReceptionBioMaterialWindow" Height="620" Width="1100" 
+        MaxHeight="720" MaxWidth="1280" MinHeight="620" MinWidth="1100" Background="White" >
     <Window.Resources>
+        
         <Style x:Key="BordStyle">
             <Setter Property="ItemsControl.BorderThickness" Value="2"></Setter>
             <Setter Property="ItemsControl.BorderBrush" Value="#FF77AFD6"></Setter>
             <Setter Property="ItemsControl.Width" Value="275"></Setter>
             <Setter Property="ItemsControl.Margin" Value="5"></Setter>
         </Style>
+        
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="19"></Setter>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="15"></Setter>
+        </Style>
+        
     </Window.Resources>
     <Grid Background="White">
         <Grid.ColumnDefinitions>
@@ -32,56 +42,64 @@
 
                 <StackPanel HorizontalAlignment="Center" Width="600" Margin="10 0 0 0">
 
-                    <Label FontSize="20">Введите штрих код</Label>
+                    <Label>Введите штрих код</Label>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Width="400" Height="35" Name="Shtr"></TextBox>
-                        <Button Width="150" Margin="10 0 0 0" FontSize="16" Click="Button_Click_2">Сгенерировать</Button>
+                        <TextBox Width="400" Height="35" Name="Shtr" SelectionChanged="Shtr_SelectionChanged" VerticalContentAlignment="Center" FontSize="17"></TextBox>
+                        <Button Width="150" Margin="10 0 0 0" Click="Button_Click_2" Name="gen">Сгенерировать</Button>
                     </StackPanel>
 
-                    <StackPanel Width="560" Height="580"  HorizontalAlignment="Left" Margin="0 10 0 0">
+                    <StackPanel Orientation="Horizontal" Margin="0 20 0 0">
+                        <Label Margin="0 0 10 0" Width="175">Код биоматериала</Label>
+                        <TextBox Width="375" Height="35" Name="BioCode"></TextBox>
+                    </StackPanel>
+
+                    <StackPanel Width="560" Height="335"  HorizontalAlignment="Left" Margin="0 10 0 0">
                         <Border BorderBrush="LightGray" BorderThickness="3">
                             <Canvas Background="#FFF3F3F3" Height="180" Name="canv"></Canvas>
                         </Border>
-                        <Button Width="250" Height="35" FontSize="16" HorizontalAlignment="Left" Margin="0 10 0 0">Печать</Button>
 
-                        <Button Width="250" Height="35" HorizontalAlignment="Left" Margin="0 310 0 0" FontSize="18" Click="Button_Click_3">Сформировать заказ</Button>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 0">
+                            <Button Width="250" Height="35" HorizontalAlignment="Left" Margin="0 0 10 0">Печать</Button>
+                            <Button Width="250" Height="35" HorizontalAlignment="Left" Margin="10 0 0 0" FontSize="17" Click="Button_Click_3">Сформировать заказ</Button>
+                        </StackPanel>
+                        
                     </StackPanel>
 
 
                 </StackPanel>
 
-                <StackPanel Width="450" Margin="15 0 0 0">
+                <Border BorderBrush="#FF8C9AA6" BorderThickness="5 0 0 0" CornerRadius="10" Grid.Column="0" Grid.RowSpan="3">
 
-                    <Label FontSize="22" HorizontalAlignment="Center" FontWeight="DemiBold">Пациент</Label>
+                    <StackPanel Width="450" Margin="15 0 0 0">
 
-                    <Label FontSize="20" HorizontalAlignment="Center">FIO</Label>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock Width="270" Height="35" Background="#FFE4E4E4" Name="FIO"></TextBlock>
-                        <Button Height="30" Width="90" FontSize="15" Margin="5 0 0 0" Click="Button_Click">Изменить</Button>
+                        <Label FontSize="22" HorizontalAlignment="Center" FontWeight="DemiBold">Пациент</Label>
+
+                        <Label HorizontalAlignment="Center">FIO</Label>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Width="270" Height="35" Background="#FFE4E4E4" Name="FIO"></TextBlock>
+                            <Button Height="30" Width="90" Margin="5 0 0 0" Click="Button_Click">Изменить</Button>
+                        </StackPanel>
+
+                        <Label HorizontalAlignment="Center">Passport Data</Label>
+                        <TextBlock Width="365" Height="30" Background="#FFE4E4E4" Name="PassDat"></TextBlock>
+
+                        <Label HorizontalAlignment="Center">Phone</Label>
+                        <TextBlock Width="365" Height="30" Background="#FFE4E4E4" Name="PhoneP"></TextBlock>
+
+                        <Label HorizontalAlignment="Center">Insurance Policy</Label>
+                        <TextBlock Width="365" Height="30" Background="#FFE4E4E4" Name="InsPol"></TextBlock>
+
+                        <Label HorizontalAlignment="Center">Type of Policy</Label>
+                        <TextBlock Width="365" Height="30" Background="#FFE4E4E4" Name="TypePol"></TextBlock>
+
+                        <Label HorizontalAlignment="Center">Услуги</Label>
+                        <ComboBox Width="365" Height="30" Name="comb"></ComboBox>
+
+                        <Button Width="280" Height="30" Margin="0 50 0 0" Click="Button_Click_1">Добавить пациента</Button>
+
                     </StackPanel>
 
-                    <Label FontSize="20" HorizontalAlignment="Center">Date of Birth</Label>
-                    <TextBlock Width="365" Height="30" Background="#FFE4E4E4" Name="DateBirth"></TextBlock>
-
-                    <Label FontSize="20" HorizontalAlignment="Center">Email</Label>
-                    <TextBlock Width="365" Height="30" Background="#FFE4E4E4" Name="EmailP"></TextBlock>
-
-                    <Label FontSize="20" HorizontalAlignment="Center">Passport Data</Label>
-                    <TextBlock Width="365" Height="30" Background="#FFE4E4E4" Name="PassDat"></TextBlock>
-
-                    <Label FontSize="20" HorizontalAlignment="Center">Phone</Label>
-                    <TextBlock Width="365" Height="30" Background="#FFE4E4E4" Name="PhoneP"></TextBlock>
-
-                    <Label FontSize="20" HorizontalAlignment="Center">Insurance Policy</Label>
-                    <TextBlock Width="365" Height="30" Background="#FFE4E4E4" Name="InsPol"></TextBlock>
-
-                    <Label FontSize="20" HorizontalAlignment="Center">Type of Policy</Label>
-                    <TextBlock Width="365" Height="30" Background="#FFE4E4E4" Name="TypePol"></TextBlock>
-
-                    <Label FontSize="20" HorizontalAlignment="Center">Услуги</Label>
-                    <ComboBox Width="365" Height="30" Name="comb"></ComboBox>
-
-                </StackPanel>
+                </Border>
 
             </StackPanel>
 

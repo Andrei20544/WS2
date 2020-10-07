@@ -27,46 +27,46 @@ namespace WSHospital
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (LOG.Text.Length == 0 && PASS.Text.Length == 0)
-            {
-                MessageBox.Show("Введите логин и пароль");
-            }
-            else if (LOG.Text.Length == 0 && PASS.Text.Length != 0)
-            {
-                MessageBox.Show("Введите логин");
-            }
-            else if (LOG.Text.Length != 0 && PASS.Text.Length == 0)
-            {
-                MessageBox.Show("Введите пароль");
-            }
-            else
-            {
-                using (ModelDB md = new ModelDB())
+                if (LOG.Text.Length == 0 && PASS.Text.Length == 0)
                 {
-                    var login = md.Users.FirstOrDefault(p => p.Login.Equals(LOG.Text));
-                    var password = md.Users.FirstOrDefault(p => p.Password.Equals(PASS.Text));
-
-                    if(login == null && password == null)
-                    {
-                        MessageBox.Show("Такого логина и пароля не существует");
-                    }
-                    else if (login == null && password != null)
-                    {
-                        MessageBox.Show("Неправильный логин");
-                    }
-                    else if (password == null && login != null)
-                    {
-                        MessageBox.Show("Неправильный пароль");
-                    }
-                    else
-                    {
-                        Users user = md.Users.Where(p => p.Login.Equals(LOG.Text) && p.Password.Equals(PASS.Text)).FirstOrDefault();
-                        UserWindow userWindow = new UserWindow(user);
-                        userWindow.Show();
-                    }            
+                    MessageBox.Show("Введите логин и пароль");
                 }
+                else if (LOG.Text.Length == 0 && PASS.Text.Length != 0)
+                {
+                    MessageBox.Show("Введите логин");
+                }
+                else if (LOG.Text.Length != 0 && PASS.Text.Length == 0)
+                {
+                    MessageBox.Show("Введите пароль");
+                }
+                else
+                {
+                    using (ModelDB md = new ModelDB())
+                    {
+                        var login = md.Users.FirstOrDefault(p => p.Login.Equals(LOG.Text));
+                        var password = md.Users.FirstOrDefault(p => p.Password.Equals(PASS.Text));
 
-            }
+                        if (login == null && password == null)
+                        {
+                            MessageBox.Show("Такого логина и пароля не существует");
+                        }
+                        else if (login == null && password != null)
+                        {
+                            MessageBox.Show("Неправильный логин");
+                        }
+                        else if (password == null && login != null)
+                        {
+                            MessageBox.Show("Неправильный пароль");
+                        }
+                        else
+                        {
+                            Users user = md.Users.Where(p => p.Login.Equals(LOG.Text) && p.Password.Equals(PASS.Text)).FirstOrDefault();
+                            UserWindow userWindow = new UserWindow(user);
+                            userWindow.Show();
+                        }
+                    }
+
+                }
             
         }
     }
