@@ -8,7 +8,7 @@ namespace WSHospital
     public partial class ModelDB : DbContext
     {
         public ModelDB()
-            : base("name=ModelDB")
+            : base("name=ModelDB1")
         {
         }
 
