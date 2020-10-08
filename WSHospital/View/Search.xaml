@@ -24,8 +24,7 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="580" Background="#FFF1F1F1">
                 <StackPanel Orientation="Horizontal">
-                    <TextBox Width="250" Height="30" Margin="5" Name="nam"/>
-                    <ComboBox Width="150" Height="30" Name="CombServNam"></ComboBox>
+                    <TextBox Width="410" Height="30" Margin="5" Name="nam" TextChanged="nam_TextChanged"/>
                     <!--<TextBox Width="100" Height="30" Name="ServNam"></TextBox>-->
                 </StackPanel>
                 <Button Width="150" Height="30" Margin="5" Click="Button_Click">Search</Button>

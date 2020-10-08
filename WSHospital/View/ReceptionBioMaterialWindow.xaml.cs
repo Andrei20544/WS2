@@ -132,9 +132,25 @@ namespace WSHospital.View
 
                 try
                 {
-                    var IdPat = md.Patients.Where(p => p.FIO.Equals(CombFIO.SelectedItem)).FirstOrDefault();
+                    var IdPat = md.Patients.Where(p => p.FIO.Equals(CombFIO.SelectedItem.ToString())).FirstOrDefault();
 
-                    var ServNam = md.LabServices.Where(p => p.Name.Equals(CombServ.SelectedItem)).FirstOrDefault();
+                    var ServNam = md.SetServicee.Where(p => p.Name.Equals(CombServ.SelectedItem.ToString())).FirstOrDefault();
+
+                    double? sum = 0;
+
+                    var dop = DopServ.SelectedItems;
+                    var cost = md.LabServices.ToList();
+
+                    foreach(var item in dop)
+                    {
+                        foreach(var item1 in cost)
+                        {
+                            if (item.ToString() == item1.Name)
+                            {
+                                sum += item1.Cost;
+                            }
+                        }                      
+                    }
 
                     orderr = new Orderr
                     {
@@ -156,10 +172,14 @@ namespace WSHospital.View
                     md.SaveChanges();
 
                     MessageBox.Show("Данные успешно созранены в БД");
+
+                    DateTime dat = DateTime.Now;
+
+                    Order order = new Order(12, 12, IdPat.InsurancePolicy, IdPat.FIO, IdPat.DateOfBirth, DopServ, 150);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Что-то пошло не так!");
+                    MessageBox.Show(ex.Message);
                 }
 
             }
@@ -237,30 +257,14 @@ namespace WSHospital.View
             Search search = new Search();
             search.Show();
         }
-        private void Button_Click_6(object sender, RoutedEventArgs e)
-        {
-            using (ModelBD md = new ModelBD())
-            {
-                var LabCost = md.LabServices.Where(p => p.Name.Equals(DopServ.SelectedItem.ToString()));
-
-                foreach (var item in LabCost)
-                {
-                    Costs.Text += item.Cost;
-                }
-
-            }
-        }
 
         private void StackPanel_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key >= Key.D0 && e.Key <= Key.D9)
+            if(e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)
             {
-                e.Handled = true;
+                return;
             }
-            else
-            {
-                e.Handled = false;
-            }
+            e.Handled = true;
         }
     }
 }

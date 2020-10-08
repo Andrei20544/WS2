@@ -21,21 +21,7 @@ namespace WSHospital.View
     {
         public Search()
         {
-            InitializeComponent();
-
-            using(ModelBD md = new ModelBD())
-            {
-                var ServNam = from s in md.LabServices
-                              select new
-                              {
-                                  NameServ = s.Name
-                              };
-
-                foreach(var item in ServNam)
-                {
-                    CombServNam.Items.Add(item.NameServ);
-                }
-            }
+            InitializeComponent();          
 
         }
 
@@ -83,11 +69,10 @@ namespace WSHospital.View
                 using (ModelBD md = new ModelBD())
                 {
                     var fioPat = from p in md.Patients select p;
-                    var namServ = md.LabServices.Where(p => p.Name.Equals(CombServNam.SelectedItem.ToString())).FirstOrDefault();
-
+                    
                     foreach (var item in fioPat)
                     {
-                        if (LevenshteinDistance(item.FIO.Split(' ')[0], nam.Text) <= 3 && CombServNam.SelectedItem.ToString() == namServ.Name)
+                        if (LevenshteinDistance(item.FIO.Split(' ')[0], nam.Text) <= 3)
                         {
                             PatList.Items.Add(item.FIO);
                         }
@@ -100,30 +85,29 @@ namespace WSHospital.View
             }
         }
 
-        //private void nam_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        PatList.Items.Clear();
+        private void nam_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                PatList.Items.Clear();
 
-        //        using (ModelDB md = new ModelDB())
-        //        {
-        //            var fioPat = from p in md.Patients select p;
-        //            var namServ = md.LabServices.Where(p => p.Name.Equals(ServNam.Text)).FirstOrDefault();
+                using (ModelBD md = new ModelBD())
+                {
+                    var fioPat = from p in md.Patients select p;
 
-        //            foreach (var item in fioPat)
-        //            {
-        //                if (LevenshteinDistance(item.FIO.Split(' ')[0], nam.Text) <= 3 && ServNam.Text == namServ.Name)
-        //                {
-        //                    PatList.Items.Add(item.FIO);
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //    }
-        //}
+                    foreach (var item in fioPat)
+                    {
+                        if (LevenshteinDistance(item.FIO.Split(' ')[0], nam.Text) <= 3)
+                        {
+                            PatList.Items.Add(item.FIO);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
