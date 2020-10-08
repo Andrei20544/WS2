@@ -25,7 +25,7 @@ namespace WSHospital.View
 
             Shtrih.Text = shtrih;
 
-            using (ModelDB md = new ModelDB())
+            using (ModelBD md = new ModelBD())
             {
                 var comp = from c in md.Company
                            select new
@@ -55,7 +55,7 @@ namespace WSHospital.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            using(ModelDB md = new ModelDB())
+            using(ModelBD md = new ModelBD())
             {
                 try
                 {

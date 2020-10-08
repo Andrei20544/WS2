@@ -41,7 +41,7 @@ namespace WSHospital
                 }
                 else
                 {
-                    using (ModelDB md = new ModelDB())
+                    using (ModelBD md = new ModelBD())
                     {
                         var login = md.Users.FirstOrDefault(p => p.Login.Equals(LOG.Text));
                         var password = md.Users.FirstOrDefault(p => p.Password.Equals(PASS.Text));

@@ -68,15 +68,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\BioMaterial.cs" />
     <Compile Include="Model\Company.cs" />
     <Compile Include="Model\LabServices.cs" />
-    <Compile Include="Model\ModelDB.cs" />
+    <Compile Include="Model\ModelBD.cs" />
     <Compile Include="Model\NumberAnalyze.cs" />
     <Compile Include="Model\Orderr.cs" />
     <Compile Include="Model\Patients.cs" />
     <Compile Include="Model\Rendering.cs" />
     <Compile Include="Model\Rolee.cs" />
-    <Compile Include="Model\SetService.cs" />
+    <Compile Include="Model\SetServicee.cs" />
     <Compile Include="Model\sysdiagrams.cs" />
     <Compile Include="Model\Users.cs" />
     <Compile Include="View\AddPatient.xaml.cs">
@@ -84,6 +85,9 @@
     </Compile>
     <Compile Include="View\ReceptionBioMaterialWindow.xaml.cs">
       <DependentUpon>ReceptionBioMaterialWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Search.xaml.cs">
+      <DependentUpon>Search.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserWindow.xaml.cs">
       <DependentUpon>UserWindow.xaml</DependentUpon>
@@ -105,6 +109,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ReceptionBioMaterialWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Search.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

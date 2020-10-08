@@ -14,7 +14,6 @@ namespace WSHospital
             NumberAnalyze = new HashSet<NumberAnalyze>();
             Orderr = new HashSet<Orderr>();
             Rendering = new HashSet<Rendering>();
-            SetService = new HashSet<SetService>();
         }
 
         public int ID { get; set; }
@@ -31,6 +30,10 @@ namespace WSHospital
 
         public double? ServiceCode { get; set; }
 
+        public int? IDSetService { get; set; }
+
+        public virtual SetServicee SetServicee { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NumberAnalyze> NumberAnalyze { get; set; }
 
@@ -39,8 +42,5 @@ namespace WSHospital
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rendering> Rendering { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SetService> SetService { get; set; }
     }
 }

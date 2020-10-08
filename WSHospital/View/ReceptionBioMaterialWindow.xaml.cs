@@ -25,9 +25,9 @@ namespace WSHospital.View
         {
             InitializeComponent();    
             
-            using (ModelDB md = new ModelDB())
+            using (ModelBD md = new ModelBD())
             {
-                var serv = from s in md.SetService
+                var serv = from s in md.SetServicee
                            select new
                            {
                                ID = s.ID,
@@ -91,7 +91,6 @@ namespace WSHospital.View
             StackPanel stackPanel = new StackPanel();
             stackPanel.Orientation = Orientation.Horizontal;
             stackPanel.VerticalAlignment = VerticalAlignment.Bottom;
-            stackPanel.HorizontalAlignment = HorizontalAlignment.Center;
             stackPanel.Width = 520;
             stackPanel.Height = 140;     
             
@@ -128,7 +127,7 @@ namespace WSHospital.View
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            using (ModelDB md = new ModelDB())
+            using (ModelBD md = new ModelBD())
             {
 
                 try
@@ -141,7 +140,7 @@ namespace WSHospital.View
                     {
                         IDPatient = IdPat.ID,
                         IDService = ServNam.ID,
-                        Status = ""
+                        Status = "IN PROGRESS"
                     };
 
                     md.Orderr.Add(orderr);
@@ -200,24 +199,25 @@ namespace WSHospital.View
         {
             DopServ.Items.Clear();
 
-            using (ModelDB md = new ModelDB())
+            using (ModelBD md = new ModelBD())
             {
-                var ServSetNam = from s in md.SetService
+                var ServSetNam = from s in md.SetServicee
                               select new
                               {
-                                  NameSetServ = s.Name,
-                                  IDServ = s.IDService
-                              };                
+                                  ID = s.ID,
+                                  NameSetServ = s.Name
+                              };
 
                 foreach(var item in ServSetNam)
                 {
                     if (CombServ.SelectedItem.ToString().Equals(item.NameSetServ))
                     {
                         var ServNam = from s in md.LabServices
-                                      where s.ID == item.IDServ
+                                      where s.IDSetService == item.ID
                                       select new
                                       {
-                                          NameServ = s.Name
+                                          NameServ = s.Name,
+                                          ID = s.IDSetService
                                       };
 
                         foreach (var item1 in ServNam)
@@ -228,7 +228,38 @@ namespace WSHospital.View
                         }
                     }
                 }
+            }
+          
+        }
 
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            Search search = new Search();
+            search.Show();
+        }
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            using (ModelBD md = new ModelBD())
+            {
+                var LabCost = md.LabServices.Where(p => p.Name.Equals(DopServ.SelectedItem.ToString()));
+
+                foreach (var item in LabCost)
+                {
+                    Costs.Text += item.Cost;
+                }
+
+            }
+        }
+
+        private void StackPanel_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key >= Key.D0 && e.Key <= Key.D9)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                e.Handled = false;
             }
         }
     }
