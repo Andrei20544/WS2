@@ -25,34 +25,36 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <StackPanel x:Name="otch">
-            
-            <Label>Дата заказа</Label>
-            <TextBlock x:Name="OrderDateOne"></TextBlock>
+        <StackPanel>
 
-            <Label>Номер заказа</Label>
-            <TextBlock x:Name="OrderNum"></TextBlock>
+            <StackPanel x:Name="otch">
+                <Label>Дата заказа</Label>
+                <TextBlock x:Name="OrderDateOne"></TextBlock>
 
-            <Label>Номер пробирки</Label>
-            <TextBlock x:Name="NumProb"></TextBlock>
+                <Label>Номер заказа</Label>
+                <TextBlock x:Name="OrderNum"></TextBlock>
 
-            <Label>Номер страхового полиса</Label>
-            <TextBlock x:Name="PoliceNum"></TextBlock>
+                <Label>Номер пробирки</Label>
+                <TextBlock x:Name="NumProb"></TextBlock>
 
-            <Label>ФИО</Label>
-            <TextBlock x:Name="FIO"></TextBlock>
+                <Label>Номер страхового полиса</Label>
+                <TextBlock x:Name="PoliceNum"></TextBlock>
 
-            <Label>Дата рождения</Label>
-            <TextBlock x:Name="DateOfBirthP"></TextBlock>
+                <Label>ФИО</Label>
+                <TextBlock x:Name="FIO"></TextBlock>
 
-            <Label>Перечень услуг</Label>
-            <ListBox Width="350" Height="110" Background="#FFE6E6E6" BorderBrush="#FFBBBBBB" BorderThickness="2" Name="ServCount"></ListBox>
+                <Label>Дата рождения</Label>
+                <TextBlock x:Name="DateOfBirthP"></TextBlock>
 
-            <Label>Стоимость</Label>
-            <TextBlock x:Name="CostServ"></TextBlock>
+                <Label>Перечень услуг</Label>
+                <ListBox Width="350" Height="110" Background="#FFE6E6E6" BorderBrush="#FFBBBBBB" BorderThickness="2" Name="ServCount"></ListBox>
+
+                <Label>Стоимость</Label>
+                <TextBlock x:Name="CostServ"></TextBlock>
+            </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="35" Margin="0 20 0 0">
-                <Button Width="190" Margin="5" Click="Button_Click">Печать</Button>
+                <Button Width="190" Margin="5" Click="Button_Click">Сохранить в PDF</Button>
                 <Button Width="190" Margin="5" Click="Button_Click_1">ОК</Button>
             </StackPanel>
 

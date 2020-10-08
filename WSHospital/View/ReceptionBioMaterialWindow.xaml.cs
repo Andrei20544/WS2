@@ -175,7 +175,10 @@ namespace WSHospital.View
 
                     DateTime dat = DateTime.Now;
 
-                    Order order = new Order(12, 12, IdPat.InsurancePolicy, IdPat.FIO, IdPat.DateOfBirth, DopServ, 150);
+                    var dd = DopServ.Items;
+
+                    Order order = new Order(12, 12, IdPat.InsurancePolicy, IdPat.FIO, IdPat.DateOfBirth, DopServ.Items, 150);
+                    order.Show();
                 }
                 catch (Exception ex)
                 {

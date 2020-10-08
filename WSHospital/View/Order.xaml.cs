@@ -24,8 +24,10 @@ namespace WSHospital.View
             InitializeComponent();
         }
 
-        public Order(int ordnum, int numprob, double? polnum, string fio, DateTime? datof, ListBox serv, int cost)
+        public Order(int ordnum, int numprob, double? polnum, string fio, DateTime? datof, ItemCollection serv, int cost)
         {
+            InitializeComponent();
+
             OrderDateOne.Text = DateTime.Now.ToString();
             OrderNum.Text = ordnum.ToString();
             NumProb.Text = numprob.ToString();
