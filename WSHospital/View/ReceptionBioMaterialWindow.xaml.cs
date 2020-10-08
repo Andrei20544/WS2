@@ -19,24 +19,35 @@ namespace WSHospital.View
     /// </summary>
     public partial class ReceptionBioMaterialWindow : Window
     {
+
+        public CheckBox check;
         public ReceptionBioMaterialWindow(Users u, int age, BitmapImage ph)
         {
             InitializeComponent();    
             
             using (ModelDB md = new ModelDB())
             {
-                var serv = from s in md.LabServices
+                var serv = from s in md.SetService
                            select new
                            {
                                ID = s.ID,
                                Name = s.Name
                            };
 
+                var fio = from p in md.Patients
+                          select new {
+                              Name = p.FIO
+                          };
+
+                foreach(var item in fio)
+                {
+                    CombFIO.Items.Add(item.Name);
+                }
+
+
                 foreach(var item in serv)
                 {
-                    CheckBox check = new CheckBox();
-                    check.Content = item.ID + ". " + item.Name;
-                    comb.Items.Add(check);
+                    CombServ.Items.Add(item.Name);
                 }
             }
 
@@ -44,8 +55,6 @@ namespace WSHospital.View
 
         public ReceptionBioMaterialWindow() {}
 
-        public LabServices Serv; 
-        public NumberAnalyze numAn;
         public Random rnd;
 
         public string GetControlEan(string str)
@@ -114,6 +123,9 @@ namespace WSHospital.View
 
         }
 
+        public Orderr orderr;
+        public NumberAnalyze numAn;
+
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             using (ModelDB md = new ModelDB())
@@ -121,17 +133,24 @@ namespace WSHospital.View
 
                 try
                 {
-                    Serv = new LabServices
-                    {
+                    var IdPat = md.Patients.Where(p => p.FIO.Equals(CombFIO.SelectedItem)).FirstOrDefault();
 
+                    var ServNam = md.LabServices.Where(p => p.Name.Equals(CombServ.SelectedItem)).FirstOrDefault();
+
+                    orderr = new Orderr
+                    {
+                        IDPatient = IdPat.ID,
+                        IDService = ServNam.ID,
+                        Status = ""
                     };
 
-                    md.LabServices.Add(Serv);
+                    md.Orderr.Add(orderr);
                     md.SaveChanges();
 
                     numAn = new NumberAnalyze
                     {
-
+                        IDPatient = IdPat.ID,
+                        IDService = ServNam.ID
                     };
 
                     md.NumberAnalyze.Add(numAn);
@@ -175,6 +194,42 @@ namespace WSHospital.View
             PrintDialog printDialog = new PrintDialog();
             printDialog.ShowDialog();
             printDialog.PrintVisual(canv, "");
+        }
+
+        private void CombServ_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DopServ.Items.Clear();
+
+            using (ModelDB md = new ModelDB())
+            {
+                var ServSetNam = from s in md.SetService
+                              select new
+                              {
+                                  NameSetServ = s.Name,
+                                  IDServ = s.IDService
+                              };                
+
+                foreach(var item in ServSetNam)
+                {
+                    if (CombServ.SelectedItem.ToString().Equals(item.NameSetServ))
+                    {
+                        var ServNam = from s in md.LabServices
+                                      where s.ID == item.IDServ
+                                      select new
+                                      {
+                                          NameServ = s.Name
+                                      };
+
+                        foreach (var item1 in ServNam)
+                        {
+                            CheckBox check = new CheckBox();
+                            check.Content = item1.NameServ;
+                            DopServ.Items.Add(check);
+                        }
+                    }
+                }
+
+            }
         }
     }
 }

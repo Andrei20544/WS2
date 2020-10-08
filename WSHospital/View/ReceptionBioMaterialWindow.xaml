@@ -76,24 +76,16 @@
 
                         <Label HorizontalAlignment="Center">FIO</Label>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBlock Width="270" Height="35" Background="#FFE4E4E4" Name="FIO"></TextBlock>
+                            <!--<TextBlock Width="270" Height="35" Background="#FFE4E4E4" Name="FIO"></TextBlock>-->
+                            <ComboBox Width="270" Height="35" Name="CombFIO" VerticalContentAlignment="Center"></ComboBox>
                             <Button Height="30" Width="90" Margin="5 0 0 0" Click="Button_Click">Изменить</Button>
                         </StackPanel>
 
-                        <Label HorizontalAlignment="Center">Passport Data</Label>
-                        <TextBlock Width="365" Height="30" Background="#FFE4E4E4" Name="PassDat"></TextBlock>
-
-                        <Label HorizontalAlignment="Center">Phone</Label>
-                        <TextBlock Width="365" Height="30" Background="#FFE4E4E4" Name="PhoneP"></TextBlock>
-
-                        <Label HorizontalAlignment="Center">Insurance Policy</Label>
-                        <TextBlock Width="365" Height="30" Background="#FFE4E4E4" Name="InsPol"></TextBlock>
-
-                        <Label HorizontalAlignment="Center">Type of Policy</Label>
-                        <TextBlock Width="365" Height="30" Background="#FFE4E4E4" Name="TypePol"></TextBlock>
-
                         <Label HorizontalAlignment="Center">Услуги</Label>
-                        <ComboBox Width="365" Height="30" Name="comb"></ComboBox>
+                        <ComboBox Width="365" Height="35" Name="CombServ" VerticalContentAlignment="Center" SelectionChanged="CombServ_SelectionChanged"></ComboBox>
+
+                        <Label HorizontalAlignment="Center">Подуслуги</Label>
+                        <ListBox Width="365" Height="100" Background="#FFF3F3F3" Name="DopServ"></ListBox>
 
                         <Button Width="280" Height="30" Margin="0 50 0 0" Click="Button_Click_1">Добавить пациента</Button>
 
