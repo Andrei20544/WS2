@@ -34,15 +34,15 @@ namespace WSHospital.View
                                Name = s.Name
                            };
 
-                var fio = from p in md.Patients
-                          select new {
-                              Name = p.FIO
-                          };
+                //var fio = from p in md.Patients
+                //          select new {
+                //              Name = p.FIO
+                //          };
 
-                foreach(var item in fio)
-                {
-                    CombFIO.Items.Add(item.Name);
-                }
+                //foreach(var item in fio)
+                //{
+                //    //CombFIO.Items.Add(item.Name);
+                //}
 
 
                 foreach(var item in serv)
@@ -132,7 +132,7 @@ namespace WSHospital.View
 
                 try
                 {
-                    var IdPat = md.Patients.Where(p => p.FIO.Equals(CombFIO.SelectedItem.ToString())).FirstOrDefault();
+                    var IdPat = md.Patients.Where(p => p.FIO.Equals(FIO.Text)).FirstOrDefault();
 
                     var ServNam = md.SetServicee.Where(p => p.Name.Equals(CombServ.SelectedItem.ToString())).FirstOrDefault();
 
@@ -272,30 +272,164 @@ namespace WSHospital.View
 
         private void BioCode_TextChanged(object sender, TextChangedEventArgs e)
         {
-            spic.Items.Clear();
-
-            if (BioCode.Text == "") spic.Visibility = Visibility.Collapsed;
-            else spic.Visibility = Visibility.Visible;
-
             using (ModelBD md = new ModelBD())
             {
                 var BioCodeB = from b in md.BioMaterial
-                              where b.BioCode.ToString().Contains(BioCode.Text)
-                              select new
-                              {
-                                  BioCode = b.BioCode
-                              };
+                               where b.BioCode.ToString().Contains(BioCode.Text)
+                               select new
+                               {
+                                   BioName = b.BioName,
+                                   BioCode = b.BioCode
+                               };
 
-                foreach(var item in BioCodeB)
+                spic.Items.Clear();
+
+                if (BioCode.Text == "")
                 {
-                    spic.Items.Add(item.BioCode);
-                }             
+                    spic.Visibility = Visibility.Collapsed;
+                    BioCode.BorderThickness = new Thickness(1, 1, 1, 1);
+                }
+                else if (BioCode.Text != "")
+                {
+                    spic.Visibility = Visibility.Visible;
+                    BioCode.BorderThickness = new Thickness(1, 1, 1, 0);
+
+                    foreach (var item in BioCodeB)
+                    {
+                        if (BioCode.Text.Equals(item.BioCode.ToString()))
+                        {
+                            spic.Visibility = Visibility.Collapsed;
+                            BioCode.BorderThickness = new Thickness(1, 1, 1, 1);
+                        }
+                    }
+
+
+
+                    foreach (var item in BioCodeB)
+                    {
+                        spic.Items.Add(" " + item.BioCode + " - " + item.BioName);
+                    }
+                }
             }
         }
 
         private void spic_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            BioCode.Text = spic.SelectedItem.ToString();
+            string code = "";
+            if (spic.SelectedItem == null)
+            {
+                code = "";
+            }
+            else if (spic.SelectedItem != null && BioCode.Text != "")
+            { 
+                code = spic.SelectedItem.ToString().Split('-')[0].Trim();
+                BioCode.Text = code;
+            }       
+        }
+
+
+        static int Minimum(int a, int b, int c) => (a = a < b ? a : b) < c ? a : c;
+
+        private static int LevenshteinDistance(string item, string nam)
+        {
+            var n = item.Length;
+            var m = nam.Length;
+            var matrix = new int[n, m];
+
+            const int deletionCost = 1;
+            const int insertionCost = 1;
+
+            for (int i = 0; i < n; i++)
+            {
+                matrix[i, 0] = i;
+            }
+            for (int j = 0; j < m; j++)
+            {
+                matrix[0, j] = j;
+            }
+
+            for (int i = 1; i < n; i++)
+            {
+                for (int j = 1; j < m; j++)
+                {
+                    var substitutionCost = item[i - 1] == nam[j - 1] ? 0 : 1;
+
+                    matrix[i, j] = Minimum(matrix[i - 1, j] + deletionCost,          // удаление
+                                            matrix[i, j - 1] + insertionCost,         // вставка
+                                            matrix[i - 1, j - 1] + substitutionCost); // замена
+                }
+            }
+
+            return matrix[n - 1, m - 1];
+        }
+
+        private void FIO_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                using (ModelBD md = new ModelBD())
+                {
+                    var fioPat = from p in md.Patients select p;
+
+                    FioSpic.Items.Clear();
+
+                    if (FIO.Text == "")
+                    {
+                        FioSpic.Visibility = Visibility.Collapsed;
+                        FIO.BorderThickness = new Thickness(1, 1, 1, 1);
+                    }
+                    else if (FIO.Text != "")
+                    {
+                        FioSpic.Visibility = Visibility.Visible;
+                        FIO.BorderThickness = new Thickness(1, 1, 1, 0);
+
+                        foreach (var item in fioPat)
+                        {
+                            if (FIO.Text.Equals(item.FIO.ToString()))
+                            {
+                                FioSpic.Visibility = Visibility.Collapsed;
+                                FIO.BorderThickness = new Thickness(1, 1, 1, 1);
+                            }
+                        }
+                    }
+
+
+                    foreach (var item in fioPat)
+                    {
+                        if (FIO.Text == "")
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            if (LevenshteinDistance(item.FIO.Split(' ')[0], FIO.Text) <= 3)
+                            {
+                                FioSpic.Items.Add(item.FIO);
+                            }
+                        }
+                       
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void FioSpic_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string code = "";
+
+            if (FioSpic.SelectedItem == null)
+            {
+                code = "";
+            }
+            else if (FioSpic.SelectedItem != null && FIO.Text != "")
+            {
+                code = FioSpic.SelectedItem.ToString().Split('-')[0].Trim();
+                FIO.Text = code;
+            }
         }
     }
 }

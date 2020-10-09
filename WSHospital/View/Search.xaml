@@ -30,7 +30,7 @@
                 <Button Width="150" Height="30" Margin="5" Click="Button_Click">Search</Button>
             </StackPanel>
 
-            <ListBox Grid.Row="1" Margin="5" Name="PatList" Background="#FFF1F1F1" Height="150">
+            <ListBox Grid.Row="1" Margin="5" Name="PatList" Background="#FFF1F1F1" Height="145">
 
             </ListBox>
 

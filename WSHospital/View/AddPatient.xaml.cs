@@ -75,7 +75,7 @@ namespace WSHospital.View
                     md.SaveChanges();
 
                     ReceptionBioMaterialWindow rbmw = new ReceptionBioMaterialWindow();
-                    rbmw.CombFIO.SelectedItem = pat.FIO;
+                    rbmw.FIO.Text = pat.FIO;
 
 
                     MessageBox.Show("Данные успешно созранены в БД");
