@@ -167,12 +167,7 @@ namespace WSHospital.View
 
                     DateTime dat = DateTime.Now;
 
-                    var dd = DopServ.SelectedItems;
-
-                    var OrdNum = md.Orderr.Where(p => p.IDPatient.Equals(IdPat.ID)).FirstOrDefault();
-                    var BioNum = md.BioMaterial.Where(p => p.BioCode.Equals(int.Parse(BioCodeA.Text))).FirstOrDefault();
-
-                    Order order = new Order(OrdNum.ID, BioNum.IDBio, IdPat.InsurancePolicy, IdPat.FIO, IdPat.DateOfBirth, (IList<ListBox>)dd, sum);
+                    Order order = new Order(DopServ, sum, IdPat.ID);
                     order.Show();
                 }
                 catch (Exception ex)

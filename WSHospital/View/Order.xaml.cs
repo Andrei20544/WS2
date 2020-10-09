@@ -26,25 +26,54 @@ namespace WSHospital.View
 
         private string link;
 
-        public Order(int ordnum, int numprob, double? polnum, string fio, DateTime? datof, IList<ListBox> serv, double? cost)
+        public Order(ListBox serv, double? cost, int idpat)
         {
             InitializeComponent();
 
-            DateTime dat = DateTime.Now;
-
-            OrderDateOne.Text = DateTime.Now.ToString();
-            OrderNum.Text = ordnum.ToString();
-            NumProb.Text = numprob.ToString();
-            PoliceNum.Text = polnum.ToString();
-            FIO.Text = fio;
-            DateOfBirthP.Text = datof.ToString();
-            foreach(var item in serv)
+            using (ModelBD md = new ModelBD())
             {
-                ServCount.Items.Add(item);
-            }           
-            CostServ.Text = cost.ToString();
+                ServCount.Items.Clear();
 
-            link = $"https://wsrussia.ru/?data=base64({dat}&{ordnum}&{numprob}&{polnum}&{fio}&{datof}&{serv}&{cost}";
+                var Ord = from p in md.Patients
+                          join o in md.Orderr on p.ID equals o.IDPatient
+                          join s in md.LabServices on o.IDService equals s.ID
+                          join set in md.SetServicee on s.IDSetService equals set.ID
+                          join b in md.BioMaterial on set.ID equals b.IDSetService
+                          select new
+                          {
+                              IDpat = p.ID,
+                              IDOrd = o.ID,
+                              IDBio = b.IDBio,
+                              PolNum = p.InsurancePolicy,
+                              FIO = p.FIO,
+                              DateOF = p.DateOfBirth
+                          };
+
+                string services = "";
+
+                foreach (var item in Ord)
+                {
+                    if (item.IDpat.Equals(idpat))
+                    {
+                        DateTime dat = DateTime.Now;
+
+                        OrderDateOne.Text = DateTime.Now.ToString();
+                        OrderNum.Text = item.IDOrd.ToString();
+                        NumProb.Text = item.IDBio.ToString();
+                        PoliceNum.Text = item.PolNum.ToString();
+                        FIO.Text = item.FIO;
+                        DateOfBirthP.Text = item.DateOF.ToString();
+                        foreach (var item1 in serv.SelectedItems)
+                        {
+                            ServCount.Items.Add(item1);
+                            services += item1.ToString() + ", ";
+                        }
+                        CostServ.Text = cost.ToString();
+                    }
+                }
+            }
+          
+            link = $"https://wsrussia.ru/?data=base64({OrderDateOne.Text}&{OrderNum.Text}&{NumProb.Text}&{PoliceNum.Text}&{FIO.Text}&{DateOfBirthP.Text}&{services}&{cost}";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
