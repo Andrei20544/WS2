@@ -25,15 +25,14 @@ namespace WSHospital.View
         }
 
         private string link;
+        private string services;
 
         public Order(ListBox serv, double? cost, int idpat)
         {
             InitializeComponent();
 
             using (ModelBD md = new ModelBD())
-            {
-                ServCount.Items.Clear();
-
+            {               
                 var Ord = from p in md.Patients
                           join o in md.Orderr on p.ID equals o.IDPatient
                           join s in md.LabServices on o.IDService equals s.ID
@@ -49,8 +48,6 @@ namespace WSHospital.View
                               DateOF = p.DateOfBirth
                           };
 
-                string services = "";
-
                 foreach (var item in Ord)
                 {
                     if (item.IDpat.Equals(idpat))
@@ -63,6 +60,9 @@ namespace WSHospital.View
                         PoliceNum.Text = item.PolNum.ToString();
                         FIO.Text = item.FIO;
                         DateOfBirthP.Text = item.DateOF.ToString();
+
+                        ServCount.Items.Clear();
+                        link = "";
                         foreach (var item1 in serv.SelectedItems)
                         {
                             ServCount.Items.Add(item1);
@@ -74,6 +74,7 @@ namespace WSHospital.View
             }
           
             link = $"https://wsrussia.ru/?data=base64({OrderDateOne.Text}&{OrderNum.Text}&{NumProb.Text}&{PoliceNum.Text}&{FIO.Text}&{DateOfBirthP.Text}&{services}&{cost}";
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

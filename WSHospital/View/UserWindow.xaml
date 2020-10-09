@@ -43,28 +43,28 @@
         </Grid.RowDefinitions>
 
         <Border BorderBrush="#FFBEBFC7" BorderThickness="3" CornerRadius="10">
-                <Image Width="220" Margin="5" Name="Img"></Image>
-            </Border>
+            <Image Width="220" Margin="5" Name="Img"></Image>
+        </Border>
 
-            <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="5 0 0 0">
+        <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="5 0 0 0">
 
-                <StackPanel VerticalAlignment="Center">
-                    <Label>Name:</Label>
-                    <Border BorderThickness="2" BorderBrush="#FF77AFD6" CornerRadius="10" Width="275">
-                        <TextBlock Name="NAME"></TextBlock>
-                    </Border>
+            <StackPanel VerticalAlignment="Center">
+                <Label>Name:</Label>
+                <Border BorderThickness="2" BorderBrush="#FF77AFD6" CornerRadius="10" Width="275">
+                    <TextBlock Name="NAME"></TextBlock>
+                </Border>
 
-                    <Label>LastName:</Label>
-                    <Border BorderThickness="2" BorderBrush="#FF77AFD6" CornerRadius="10" Width="275">
-                        <TextBlock Name="LNAME"></TextBlock>
-                    </Border>
+                <Label>LastName:</Label>
+                <Border BorderThickness="2" BorderBrush="#FF77AFD6" CornerRadius="10" Width="275">
+                    <TextBlock Name="LNAME"></TextBlock>
+                </Border>
 
-                    <Label>Age:</Label>
-                    <Border BorderThickness="2" BorderBrush="#FF77AFD6" CornerRadius="10" Width="275">
-                        <TextBlock Name="AGE"></TextBlock>
-                    </Border>
-                </StackPanel>
+                <Label>Age:</Label>
+                <Border BorderThickness="2" BorderBrush="#FF77AFD6" CornerRadius="10" Width="275">
+                    <TextBlock Name="AGE"></TextBlock>
+                </Border>
             </StackPanel>
+        </StackPanel>
 
         <Border Grid.Row="1" Grid.ColumnSpan="3" BorderBrush="#FFBEBFC7" BorderThickness="3" CornerRadius="20">
             <Border.Background>
@@ -74,7 +74,11 @@
                 </LinearGradientBrush>
             </Border.Background>
             <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Background="Transparent">
-                <Button x:Name="bio" Click="bio_Click">Принять биоматериал</Button>
+
+                <Border BorderBrush="#FF8194A0" BorderThickness="3" Width="466" CornerRadius="5" Margin="0 5 0 0">
+                    <Button x:Name="bio" Click="bio_Click" BorderThickness="0" Margin="0" Background="Transparent" Width="450">Принять биоматериал</Button>
+                </Border>
+
                 <Button x:Name="otch" Click="otch_Click">Сформировать отчеты</Button>
                 <Button x:Name="work">Работа с анализатором</Button>
                 <Button x:Name="LookOtch">Посмотреть отчеты</Button>

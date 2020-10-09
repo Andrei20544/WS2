@@ -41,8 +41,8 @@
                 <TextBox Background="Transparent" Name="PASS">X$9rJpYU</TextBox>
             </Border>
 
-            <Border BorderBrush="#FF95A3B2" Margin="0 85 0 0" Height="40" CornerRadius="8" BorderThickness="5" Width="380" Background="#FF95A3B2">
-                <Button Width="370" Height="30" FontSize="18" Background="#FF95A3B2" Click="Button_Click" BorderThickness="0">Sign</Button>
+            <Border BorderBrush="#FF95A3B2" Margin="0 85 0 0" Height="40" CornerRadius="8" BorderThickness="1" Width="380" Background="#FF95A3B2">
+                <Button Width="370" Height="31" FontSize="17" Background="#FF95A3B2" Click="Button_Click" BorderThickness="0">Sign</Button>
             </Border>
 
         </StackPanel>

@@ -65,8 +65,7 @@ namespace WSHospital.View
             stackPanel.Orientation = Orientation.Horizontal;
             stackPanel.VerticalAlignment = VerticalAlignment.Bottom;
             stackPanel.Width = 520;
-            stackPanel.Height = 140;     
-            
+            stackPanel.Height = 140;
 
             for (int i = 0; i < barcode.Length; i++)
             {
@@ -86,12 +85,13 @@ namespace WSHospital.View
                 label.Margin = new Thickness(0, 20, 0, 0);
 
                 stackPanel1.Children.Add(label);
-                stackPanel1.Children.Add(rectangle);         
+                stackPanel1.Children.Add(rectangle);
 
                 stackPanel.Children.Add(stackPanel1);
             }
 
-            canv.Children.Add(stackPanel);
+            Shtr.Text = barcode;
+            canv.Children.Add(stackPanel);     
 
         }
 

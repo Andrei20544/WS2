@@ -87,6 +87,7 @@
                             <Label HorizontalAlignment="Center">FIO</Label>
 
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
                                 <TextBox Width="270" Height="35" Background="#FFE4E4E4" Name="FIO" FontSize="16" VerticalContentAlignment="Center" TextChanged="FIO_TextChanged"/>
                                 <!--<ComboBox Width="270" Height="35" Name="CombFIO" VerticalContentAlignment="Center"></ComboBox>-->
 
@@ -98,6 +99,7 @@
 
                             <Label HorizontalAlignment="Center">Услуги</Label>
                             <!--<ComboBox Width="365" Height="35" Name="CombServ" VerticalContentAlignment="Center" SelectionChanged="CombServ_SelectionChanged"></ComboBox>-->
+
                             <TextBox Width="365" Height="35" Name="NameServ" FontSize="16" VerticalContentAlignment="Center" Background="#FFE4E4E4" TextChanged="NameServ_TextChanged"></TextBox>
                             <ListBox Width="365" Visibility="Collapsed" Background="#FFF3F3F3" Name="NamServSpic" Panel.ZIndex="5" MaxHeight="120" BorderThickness="1 1 1 1" SelectionChanged="NamServSpic_SelectionChanged"/>
 
@@ -105,7 +107,7 @@
                             <ListBox Width="365" Height="210" Background="#FFF3F3F3" Name="DopServ" SelectionMode="Multiple"/>
 
                             <StackPanel Height="30" Margin="0 50 0 0" Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Button Width="280" Height="30"  Click="Button_Click_1">Добавить пациента</Button>
+                                <Button Width="280" Height="30"  Click="Button_Click_1" BorderThickness="0">Добавить пациента</Button>
                             </StackPanel>
 
                         </StackPanel>
