@@ -269,5 +269,33 @@ namespace WSHospital.View
             }
             e.Handled = true;
         }
+
+        private void BioCode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            spic.Items.Clear();
+
+            if (BioCode.Text == "") spic.Visibility = Visibility.Collapsed;
+            else spic.Visibility = Visibility.Visible;
+
+            using (ModelBD md = new ModelBD())
+            {
+                var BioCodeB = from b in md.BioMaterial
+                              where b.BioCode.ToString().Contains(BioCode.Text)
+                              select new
+                              {
+                                  BioCode = b.BioCode
+                              };
+
+                foreach(var item in BioCodeB)
+                {
+                    spic.Items.Add(item.BioCode);
+                }             
+            }
+        }
+
+        private void spic_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BioCode.Text = spic.SelectedItem.ToString();
+        }
     }
 }
