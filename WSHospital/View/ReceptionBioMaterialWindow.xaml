@@ -56,7 +56,7 @@
                         </StackPanel>
                     </StackPanel>
 
-                    <ListBox Width="520" Visibility="Collapsed" Background="#FFF3F3F3" Name="spic" Panel.ZIndex="5" MaxHeight="120" SelectionChanged="spic_SelectionChanged" BorderThickness="1 1 1 1"></ListBox>
+                    <ListBox Width="560" Visibility="Collapsed" Background="#FFF3F3F3" Name="spic" Margin="0 0 40 0" Panel.ZIndex="5" MaxHeight="120" SelectionChanged="spic_SelectionChanged" BorderThickness="1 1 1 1"></ListBox>
 
                     <StackPanel Width="560" Height="335"  HorizontalAlignment="Left" Margin="0 10 0 0" Panel.ZIndex="0">
                         <Border BorderBrush="LightGray" BorderThickness="3" HorizontalAlignment="Center" Panel.ZIndex="0">

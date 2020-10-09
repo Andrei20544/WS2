@@ -64,6 +64,7 @@ namespace WSHospital.View
             StackPanel stackPanel = new StackPanel();
             stackPanel.Orientation = Orientation.Horizontal;
             stackPanel.VerticalAlignment = VerticalAlignment.Bottom;
+            stackPanel.Margin = new Thickness(80, 0, 0, 0);
             stackPanel.Width = 520;
             stackPanel.Height = 140;
 
@@ -180,7 +181,12 @@ namespace WSHospital.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            using(ModelBD md = new ModelBD())
+            {
+                var pat = md.Patients.Where(p => p.FIO.Equals(FIO.Text)).FirstOrDefault();
+                AddPatient addPatient = new AddPatient(pat.ID, Shtr.Text);
+                addPatient.Show();
+            }
         }
 
         private void Shtr_SelectionChanged(object sender, RoutedEventArgs e)

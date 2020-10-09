@@ -51,6 +51,27 @@ namespace WSHospital.View
 
         }
 
+        public AddPatient(int id, string shtr)
+        {
+            InitializeComponent();
+
+            using (ModelBD md = new ModelBD())
+            {
+                var patient = md.Patients.Where(p => p.ID.Equals(id)).FirstOrDefault();
+
+                pFIO.Text = patient.FIO;
+                DaT.SelectedDate = patient.DateOfBirth;
+                pEmail.Text = patient.Email;
+                pPassportData.Text = patient.PassportData;
+                pPhone.Text = patient.Phone.ToString();
+                pInsPolicy.Text = patient.InsurancePolicy.ToString();
+                PolName.SelectedItem = patient.TypeOfPolicy;
+                CompName.SelectedItem = patient.Company;
+
+                Shtrih.Text = shtr;
+            }
+        }
+
         public Patients pat;
 
         private void Button_Click(object sender, RoutedEventArgs e)
