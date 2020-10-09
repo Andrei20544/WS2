@@ -31,7 +31,7 @@
             <GradientStop Color="#FFD4D4D4" Offset="1"/>
         </LinearGradientBrush>
     </Window.Background>
-    <Grid>
+    <Grid x:Name="grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="238*"></ColumnDefinition>
             <ColumnDefinition Width="157*"></ColumnDefinition>
@@ -43,28 +43,28 @@
         </Grid.RowDefinitions>
 
         <Border BorderBrush="#FFBEBFC7" BorderThickness="3" CornerRadius="10">
-            <Image Width="220" Margin="5" Name="Img"></Image>
-        </Border>
+                <Image Width="220" Margin="5" Name="Img"></Image>
+            </Border>
 
-        <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="5 0 0 0">
+            <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="5 0 0 0">
 
-            <StackPanel VerticalAlignment="Center">
-                <Label>Name:</Label>
-                <Border BorderThickness="2" BorderBrush="#FF77AFD6" CornerRadius="10" Width="275">
-                    <TextBlock Name="NAME"></TextBlock>
-                </Border>
+                <StackPanel VerticalAlignment="Center">
+                    <Label>Name:</Label>
+                    <Border BorderThickness="2" BorderBrush="#FF77AFD6" CornerRadius="10" Width="275">
+                        <TextBlock Name="NAME"></TextBlock>
+                    </Border>
 
-                <Label>LastName:</Label>
-                <Border BorderThickness="2" BorderBrush="#FF77AFD6" CornerRadius="10" Width="275">
-                    <TextBlock Name="LNAME"></TextBlock>
-                </Border>
+                    <Label>LastName:</Label>
+                    <Border BorderThickness="2" BorderBrush="#FF77AFD6" CornerRadius="10" Width="275">
+                        <TextBlock Name="LNAME"></TextBlock>
+                    </Border>
 
-                <Label>Age:</Label>
-                <Border BorderThickness="2" BorderBrush="#FF77AFD6" CornerRadius="10" Width="275">
-                    <TextBlock Name="AGE"></TextBlock>
-                </Border>
+                    <Label>Age:</Label>
+                    <Border BorderThickness="2" BorderBrush="#FF77AFD6" CornerRadius="10" Width="275">
+                        <TextBlock Name="AGE"></TextBlock>
+                    </Border>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
 
         <Border Grid.Row="1" Grid.ColumnSpan="3" BorderBrush="#FFBEBFC7" BorderThickness="3" CornerRadius="20">
             <Border.Background>
@@ -75,13 +75,11 @@
             </Border.Background>
             <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Background="Transparent">
                 <Button x:Name="bio" Click="bio_Click">Принять биоматериал</Button>
-                <Button x:Name="otch">Сформировать отчеты</Button>
+                <Button x:Name="otch" Click="otch_Click">Сформировать отчеты</Button>
                 <Button x:Name="work">Работа с анализатором</Button>
                 <Button x:Name="LookOtch">Посмотреть отчеты</Button>
                 <Button x:Name="CreateSch">Сформировать счет страховой компании</Button>
             </StackPanel>
         </Border>
-
-
     </Grid>
 </Window>

@@ -75,5 +75,10 @@ namespace WSHospital
             BitmapImage bitmap = new BitmapImage(uri);
             return bitmap;
         }
+
+        private void otch_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

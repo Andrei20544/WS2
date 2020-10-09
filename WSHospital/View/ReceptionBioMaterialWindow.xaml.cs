@@ -23,34 +23,7 @@ namespace WSHospital.View
         public CheckBox check;
         public ReceptionBioMaterialWindow(Users u, int age, BitmapImage ph)
         {
-            InitializeComponent();    
-            
-            //using (ModelBD md = new ModelBD())
-            //{
-            //    var serv = from s in md.SetServicee
-            //               select new
-            //               {
-            //                   ID = s.ID,
-            //                   Name = s.Name
-            //               };
-
-            //    //var fio = from p in md.Patients
-            //    //          select new {
-            //    //              Name = p.FIO
-            //    //          };
-
-            //    //foreach(var item in fio)
-            //    //{
-            //    //    //CombFIO.Items.Add(item.Name);
-            //    //}
-
-
-            //    foreach(var item in serv)
-            //    {
-            //        CombServ.Items.Add(item.Name);
-            //    }
-            //}
-
+            InitializeComponent();               
         }
 
         public ReceptionBioMaterialWindow() {}
@@ -124,6 +97,7 @@ namespace WSHospital.View
 
         public Orderr orderr;
         public NumberAnalyze numAn;
+        public BioMaterial bioMaterial;
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
@@ -134,22 +108,22 @@ namespace WSHospital.View
                 {
                     var IdPat = md.Patients.Where(p => p.FIO.Equals(FIO.Text)).FirstOrDefault();
 
-                    var ServNam = md.SetServicee.Where(p => p.Name.Equals(NameServ)).FirstOrDefault();
+                    var ServNam = md.SetServicee.Where(p => p.Name.Equals(NameServ.Text)).FirstOrDefault();
 
                     double? sum = 0;
 
                     var dop = DopServ.SelectedItems;
                     var cost = md.LabServices.ToList();
 
-                    foreach(var item in dop)
+                    foreach (var item in dop)
                     {
-                        foreach(var item1 in cost)
+                        foreach (var item1 in cost)
                         {
                             if (item.ToString() == item1.Name)
                             {
                                 sum += item1.Cost;
                             }
-                        }                      
+                        }
                     }
 
                     orderr = new Orderr
@@ -162,10 +136,28 @@ namespace WSHospital.View
                     md.Orderr.Add(orderr);
                     md.SaveChanges();
 
+                    if (DopServ.Items != null)
+                    {
+                        var items = DopServ.SelectedItems;
+
+                        foreach(var item in items)
+                        {
+                            bioMaterial = new BioMaterial
+                            {
+                                IDSetService = ServNam.ID,
+                                BioCode = int.Parse(BioCodeA.Text),
+                                BioName = item.ToString()
+                            };
+
+                            md.BioMaterial.Add(bioMaterial);
+                            md.SaveChanges();
+                        }                
+                    }
+                  
                     numAn = new NumberAnalyze
                     {
                         IDPatient = IdPat.ID,
-                        IDService = ServNam.ID
+                        IDService = ServNam.ID,
                     };
 
                     md.NumberAnalyze.Add(numAn);
@@ -175,9 +167,12 @@ namespace WSHospital.View
 
                     DateTime dat = DateTime.Now;
 
-                    var dd = DopServ.Items;
+                    var dd = DopServ.SelectedItems;
 
-                    Order order = new Order(12, 12, IdPat.InsurancePolicy, IdPat.FIO, IdPat.DateOfBirth, DopServ.Items, 150);
+                    var OrdNum = md.Orderr.Where(p => p.IDPatient.Equals(IdPat.ID)).FirstOrDefault();
+                    var BioNum = md.BioMaterial.Where(p => p.BioCode.Equals(int.Parse(BioCodeA.Text))).FirstOrDefault();
+
+                    Order order = new Order(OrdNum.ID, BioNum.IDBio, IdPat.InsurancePolicy, IdPat.FIO, IdPat.DateOfBirth, (IList<ListBox>)dd, sum);
                     order.Show();
                 }
                 catch (Exception ex)
@@ -217,7 +212,7 @@ namespace WSHospital.View
             printDialog.ShowDialog();
             printDialog.PrintVisual(canv, "");
         }
-        ////////////////
+        //////////Del
         private void CombServ_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DopServ.Items.Clear();
@@ -254,6 +249,7 @@ namespace WSHospital.View
             }
           
         }
+        //////////Del
 
         private void Button_Click_5(object sender, RoutedEventArgs e)
         {
@@ -297,7 +293,7 @@ namespace WSHospital.View
             using (ModelBD md = new ModelBD())
             {
                 var BioCodeB = from b in md.BioMaterial
-                               where b.BioCode.ToString().Contains(BioCode.Text)
+                               where b.BioCode.ToString().Contains(BioCodeA.Text)
                                select new
                                {
                                    BioName = b.BioName,
@@ -306,19 +302,19 @@ namespace WSHospital.View
 
                 spic.Items.Clear();
 
-                if (BioCode.Text == "")
+                if (BioCodeA.Text == "")
                 {
-                    GetVisibilityListBox(spic, Visibility.Collapsed, BioCode, new Thickness(1, 1, 1, 1));
+                    GetVisibilityListBox(spic, Visibility.Collapsed, BioCodeA, new Thickness(1, 1, 1, 1));
                 }
-                else if (BioCode.Text != "")
+                else if (BioCodeA.Text != "")
                 {
-                    GetVisibilityListBox(spic, Visibility.Visible, BioCode, new Thickness(1, 1, 1, 0));
+                    GetVisibilityListBox(spic, Visibility.Visible, BioCodeA, new Thickness(1, 1, 1, 0));
 
                     foreach (var item in BioCodeB)
                     {
-                        if (BioCode.Text.Equals(item.BioCode.ToString()))
+                        if (BioCodeA.Text.Equals(item.BioCode.ToString()))
                         {
-                            GetVisibilityListBox(spic, Visibility.Collapsed, BioCode, new Thickness(1, 1, 1, 1));
+                            GetVisibilityListBox(spic, Visibility.Collapsed, BioCodeA, new Thickness(1, 1, 1, 1));
                         }
                     }
 
@@ -334,7 +330,7 @@ namespace WSHospital.View
 
         private void spic_SelectionChanged(object sender, SelectionChangedEventArgs e)
         { 
-            GetSelectionChange(spic.SelectedItem, BioCode);
+            GetSelectionChange(spic.SelectedItem, BioCodeA);
         }
         //
 
@@ -442,9 +438,10 @@ namespace WSHospital.View
                                       ServName = s.Name
                                   };
 
+                    DopServ.Items.Clear();
                     foreach (var item in NamServ)
                     {
-                        if (NameServ.Equals(item.ServName))
+                        if (NameServ.Text.Equals(item.ServName))
                         {
                             var ServNam = from s in md.LabServices
                                           where s.IDSetService == item.ID
@@ -456,9 +453,7 @@ namespace WSHospital.View
 
                             foreach (var item1 in ServNam)
                             {
-                                CheckBox check = new CheckBox();
-                                check.Content = item1.NameServ;
-                                DopServ.Items.Add(check);
+                                DopServ.Items.Add(item1.NameServ);
                             }
                         }
                     }
@@ -504,6 +499,32 @@ namespace WSHospital.View
         private void NamServSpic_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             GetSelectionChange(NamServSpic.SelectedItem, NameServ);
+        }
+
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            using (ModelBD md = new ModelBD())
+            {
+                CheckBox check = new CheckBox();
+
+                var dop = DopServ.SelectedItems;
+                var cost = md.LabServices.ToList();
+
+                double? sum = 0;
+
+                foreach (var item in dop)
+                {
+                    foreach (var item1 in cost)
+                    {
+                        if (item.ToString() == item1.Name)
+                        {
+                            sum += item1.Cost;
+                        }
+                    }
+                }
+
+                summ.Text = sum.ToString();
+            }
         }
         //
 

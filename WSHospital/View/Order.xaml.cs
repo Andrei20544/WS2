@@ -26,7 +26,7 @@ namespace WSHospital.View
 
         private string link;
 
-        public Order(int ordnum, int numprob, double? polnum, string fio, DateTime? datof, ItemCollection serv, int cost)
+        public Order(int ordnum, int numprob, double? polnum, string fio, DateTime? datof, IList<ListBox> serv, double? cost)
         {
             InitializeComponent();
 
