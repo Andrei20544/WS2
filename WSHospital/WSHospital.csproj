@@ -89,9 +89,6 @@
     <Compile Include="View\ReceptionBioMaterialWindow.xaml.cs">
       <DependentUpon>ReceptionBioMaterialWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Search.xaml.cs">
-      <DependentUpon>Search.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\UserWindow.xaml.cs">
       <DependentUpon>UserWindow.xaml</DependentUpon>
     </Compile>
@@ -116,10 +113,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ReceptionBioMaterialWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Search.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

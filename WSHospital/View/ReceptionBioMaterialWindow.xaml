@@ -104,9 +104,8 @@
                             <Label HorizontalAlignment="Center">Подуслуги</Label>
                             <ListBox Width="365" Height="210" Background="#FFF3F3F3" Name="DopServ" SelectionMode="Multiple"/>
 
-                            <StackPanel Width="380" Height="30" Margin="0 50 0 0" Orientation="Horizontal">
+                            <StackPanel Height="30" Margin="0 50 0 0" Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Button Width="280" Height="30"  Click="Button_Click_1">Добавить пациента</Button>
-                                <Button Width="90" Margin="10 0 0 0" Click="Button_Click_5">Search</Button>
                             </StackPanel>
 
                         </StackPanel>

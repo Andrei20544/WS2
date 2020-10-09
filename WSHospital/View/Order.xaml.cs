@@ -38,7 +38,10 @@ namespace WSHospital.View
             PoliceNum.Text = polnum.ToString();
             FIO.Text = fio;
             DateOfBirthP.Text = datof.ToString();
-            ServCount.Items.Add(serv);
+            foreach(var item in serv)
+            {
+                ServCount.Items.Add(item);
+            }           
             CostServ.Text = cost.ToString();
 
             link = $"https://wsrussia.ru/?data=base64({dat}&{ordnum}&{numprob}&{polnum}&{fio}&{datof}&{serv}&{cost}";

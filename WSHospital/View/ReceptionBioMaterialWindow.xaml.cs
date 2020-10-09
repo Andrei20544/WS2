@@ -211,51 +211,7 @@ namespace WSHospital.View
             PrintDialog printDialog = new PrintDialog();
             printDialog.ShowDialog();
             printDialog.PrintVisual(canv, "");
-        }
-        //////////Del
-        private void CombServ_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            DopServ.Items.Clear();
-
-            using (ModelBD md = new ModelBD())
-            {
-                var ServSetNam = from s in md.SetServicee
-                              select new
-                              {
-                                  ID = s.ID,
-                                  NameSetServ = s.Name
-                              };
-
-                foreach(var item in ServSetNam)
-                {
-                    if (NameServ.Equals(item.NameSetServ))
-                    {
-                        var ServNam = from s in md.LabServices
-                                      where s.IDSetService == item.ID
-                                      select new
-                                      {
-                                          NameServ = s.Name,
-                                          ID = s.IDSetService
-                                      };
-
-                        foreach (var item1 in ServNam)
-                        {
-                            CheckBox check = new CheckBox();
-                            check.Content = item1.NameServ;
-                            DopServ.Items.Add(check);
-                        }
-                    }
-                }
-            }
-          
-        }
-        //////////Del
-
-        private void Button_Click_5(object sender, RoutedEventArgs e)
-        {
-            Search search = new Search();
-            search.Show();
-        }
+        }     
 
         private void StackPanel_KeyDown(object sender, KeyEventArgs e)
         {
