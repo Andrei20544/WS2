@@ -24,9 +24,13 @@ namespace WSHospital.View
             InitializeComponent();
         }
 
+        private string link;
+
         public Order(int ordnum, int numprob, double? polnum, string fio, DateTime? datof, ItemCollection serv, int cost)
         {
             InitializeComponent();
+
+            DateTime dat = DateTime.Now;
 
             OrderDateOne.Text = DateTime.Now.ToString();
             OrderNum.Text = ordnum.ToString();
@@ -36,6 +40,8 @@ namespace WSHospital.View
             DateOfBirthP.Text = datof.ToString();
             ServCount.Items.Add(serv);
             CostServ.Text = cost.ToString();
+
+            link = $"https://wsrussia.ru/?data=base64({dat}&{ordnum}&{numprob}&{polnum}&{fio}&{datof}&{serv}&{cost}";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -51,7 +57,7 @@ namespace WSHospital.View
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("Ссылка: " + link);
         }
     }
 }

@@ -25,31 +25,31 @@ namespace WSHospital.View
         {
             InitializeComponent();    
             
-            using (ModelBD md = new ModelBD())
-            {
-                var serv = from s in md.SetServicee
-                           select new
-                           {
-                               ID = s.ID,
-                               Name = s.Name
-                           };
+            //using (ModelBD md = new ModelBD())
+            //{
+            //    var serv = from s in md.SetServicee
+            //               select new
+            //               {
+            //                   ID = s.ID,
+            //                   Name = s.Name
+            //               };
 
-                //var fio = from p in md.Patients
-                //          select new {
-                //              Name = p.FIO
-                //          };
+            //    //var fio = from p in md.Patients
+            //    //          select new {
+            //    //              Name = p.FIO
+            //    //          };
 
-                //foreach(var item in fio)
-                //{
-                //    //CombFIO.Items.Add(item.Name);
-                //}
+            //    //foreach(var item in fio)
+            //    //{
+            //    //    //CombFIO.Items.Add(item.Name);
+            //    //}
 
 
-                foreach(var item in serv)
-                {
-                    CombServ.Items.Add(item.Name);
-                }
-            }
+            //    foreach(var item in serv)
+            //    {
+            //        CombServ.Items.Add(item.Name);
+            //    }
+            //}
 
         }
 
@@ -134,7 +134,7 @@ namespace WSHospital.View
                 {
                     var IdPat = md.Patients.Where(p => p.FIO.Equals(FIO.Text)).FirstOrDefault();
 
-                    var ServNam = md.SetServicee.Where(p => p.Name.Equals(CombServ.SelectedItem.ToString())).FirstOrDefault();
+                    var ServNam = md.SetServicee.Where(p => p.Name.Equals(NameServ)).FirstOrDefault();
 
                     double? sum = 0;
 
@@ -217,7 +217,7 @@ namespace WSHospital.View
             printDialog.ShowDialog();
             printDialog.PrintVisual(canv, "");
         }
-
+        ////////////////
         private void CombServ_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DopServ.Items.Clear();
@@ -233,7 +233,7 @@ namespace WSHospital.View
 
                 foreach(var item in ServSetNam)
                 {
-                    if (CombServ.SelectedItem.ToString().Equals(item.NameSetServ))
+                    if (NameServ.Equals(item.NameSetServ))
                     {
                         var ServNam = from s in md.LabServices
                                       where s.IDSetService == item.ID
@@ -270,6 +270,28 @@ namespace WSHospital.View
             e.Handled = true;
         }
 
+        public void GetSelectionChange(object selector, TextBox textInput)
+        {
+            string code = "";
+
+            if (selector == null)
+            {
+                code = "";
+            }
+            else if (selector != null && textInput.Text != "")
+            {
+                code = selector.ToString().Split('-')[0].Trim();
+                textInput.Text = code;
+            }
+        }
+
+        public void GetVisibilityListBox(ListBox list, Visibility vis, TextBox text, Thickness thickness)
+        {
+            list.Visibility = vis;
+            text.BorderThickness = thickness;
+        }
+
+        //BioCode
         private void BioCode_TextChanged(object sender, TextChangedEventArgs e)
         {
             using (ModelBD md = new ModelBD())
@@ -286,20 +308,17 @@ namespace WSHospital.View
 
                 if (BioCode.Text == "")
                 {
-                    spic.Visibility = Visibility.Collapsed;
-                    BioCode.BorderThickness = new Thickness(1, 1, 1, 1);
+                    GetVisibilityListBox(spic, Visibility.Collapsed, BioCode, new Thickness(1, 1, 1, 1));
                 }
                 else if (BioCode.Text != "")
                 {
-                    spic.Visibility = Visibility.Visible;
-                    BioCode.BorderThickness = new Thickness(1, 1, 1, 0);
+                    GetVisibilityListBox(spic, Visibility.Visible, BioCode, new Thickness(1, 1, 1, 0));
 
                     foreach (var item in BioCodeB)
                     {
                         if (BioCode.Text.Equals(item.BioCode.ToString()))
                         {
-                            spic.Visibility = Visibility.Collapsed;
-                            BioCode.BorderThickness = new Thickness(1, 1, 1, 1);
+                            GetVisibilityListBox(spic, Visibility.Collapsed, BioCode, new Thickness(1, 1, 1, 1));
                         }
                     }
 
@@ -314,20 +333,12 @@ namespace WSHospital.View
         }
 
         private void spic_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            string code = "";
-            if (spic.SelectedItem == null)
-            {
-                code = "";
-            }
-            else if (spic.SelectedItem != null && BioCode.Text != "")
-            { 
-                code = spic.SelectedItem.ToString().Split('-')[0].Trim();
-                BioCode.Text = code;
-            }       
+        { 
+            GetSelectionChange(spic.SelectedItem, BioCode);
         }
+        //
 
-
+        //LevenshteinDistance
         static int Minimum(int a, int b, int c) => (a = a < b ? a : b) < c ? a : c;
 
         private static int LevenshteinDistance(string item, string nam)
@@ -362,7 +373,9 @@ namespace WSHospital.View
 
             return matrix[n - 1, m - 1];
         }
+        //
 
+        //FIO
         private void FIO_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -373,23 +386,15 @@ namespace WSHospital.View
 
                     FioSpic.Items.Clear();
 
-                    if (FIO.Text == "")
+                    if (FIO.Text == "") GetVisibilityListBox(FioSpic, Visibility.Collapsed, FIO, new Thickness(1, 1, 1, 1));
+
+                    else if (FIO.Text != "") 
                     {
-                        FioSpic.Visibility = Visibility.Collapsed;
-                        FIO.BorderThickness = new Thickness(1, 1, 1, 1);
-                    }
-                    else if (FIO.Text != "")
-                    {
-                        FioSpic.Visibility = Visibility.Visible;
-                        FIO.BorderThickness = new Thickness(1, 1, 1, 0);
+                        GetVisibilityListBox(FioSpic, Visibility.Visible, FIO, new Thickness(1, 1, 1, 0));
 
                         foreach (var item in fioPat)
                         {
-                            if (FIO.Text.Equals(item.FIO.ToString()))
-                            {
-                                FioSpic.Visibility = Visibility.Collapsed;
-                                FIO.BorderThickness = new Thickness(1, 1, 1, 1);
-                            }
+                            if (FIO.Text.Equals(item.FIO.ToString())) GetVisibilityListBox(FioSpic, Visibility.Collapsed, FIO, new Thickness(1, 1, 1, 1));
                         }
                     }
 
@@ -419,17 +424,89 @@ namespace WSHospital.View
 
         private void FioSpic_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string code = "";
+            GetSelectionChange(FioSpic.SelectedItem, FIO);
+        }
+        //
 
-            if (FioSpic.SelectedItem == null)
+        //
+        private void NameServ_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
             {
-                code = "";
+                using (ModelBD md = new ModelBD())
+                {
+                    var NamServ = from s in md.SetServicee
+                                  select new
+                                  {
+                                      ID = s.ID,
+                                      ServName = s.Name
+                                  };
+
+                    foreach (var item in NamServ)
+                    {
+                        if (NameServ.Equals(item.ServName))
+                        {
+                            var ServNam = from s in md.LabServices
+                                          where s.IDSetService == item.ID
+                                          select new
+                                          {
+                                              NameServ = s.Name,
+                                              ID = s.IDSetService
+                                          };
+
+                            foreach (var item1 in ServNam)
+                            {
+                                CheckBox check = new CheckBox();
+                                check.Content = item1.NameServ;
+                                DopServ.Items.Add(check);
+                            }
+                        }
+                    }
+
+                    NamServSpic.Items.Clear();
+
+                    if (NameServ.Text == "") GetVisibilityListBox(NamServSpic, Visibility.Collapsed, NameServ, new Thickness(1, 1, 1, 1));
+
+                    else if (NameServ.Text != "")
+                    {
+                        GetVisibilityListBox(NamServSpic, Visibility.Visible, NameServ, new Thickness(1, 1, 1, 0));
+
+                        foreach (var item in NamServ)
+                        {
+                            if (NameServ.Text.Equals(item.ServName.ToString())) GetVisibilityListBox(NamServSpic, Visibility.Collapsed, NameServ, new Thickness(1, 1, 1, 1));
+                        }
+                    }
+
+
+                    foreach (var item in NamServ)
+                    {
+                        if (NameServ.Text == "")
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            if (LevenshteinDistance(item.ServName, NameServ.Text) <= 3)
+                            {
+                                NamServSpic.Items.Add(item.ServName);
+                            }
+                        }
+
+                    }
+                }
             }
-            else if (FioSpic.SelectedItem != null && FIO.Text != "")
+            catch (Exception ex)
             {
-                code = FioSpic.SelectedItem.ToString().Split('-')[0].Trim();
-                FIO.Text = code;
+                MessageBox.Show(ex.Message);
             }
         }
+
+        private void NamServSpic_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            GetSelectionChange(NamServSpic.SelectedItem, NameServ);
+        }
+        //
+
+
     }
 }

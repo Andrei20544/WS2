@@ -42,7 +42,9 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Image Width="220" Margin="5" Name="Img"></Image>
+        <Border BorderBrush="#FFBEBFC7" BorderThickness="3" CornerRadius="10">
+            <Image Width="220" Margin="5" Name="Img"></Image>
+        </Border>
 
         <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="5 0 0 0">
 
